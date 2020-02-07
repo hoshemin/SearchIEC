@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panel>
+ <properties>
+  <prop name="Name">
+   <prop name="ru_RU.utf8"></prop>
+   <prop name="en_US.utf8"></prop>
+  </prop>
+  <prop name="Size">715 210</prop>
+  <prop name="BackColor">_3DFace</prop>
+  <prop name="RefPoint">140 16</prop>
+  <prop name="InitAndTermRef">True</prop>
+  <prop name="SendClick">False</prop>
+  <prop name="RefFileName"></prop>
+  <prop name="DPI">96</prop>
+  <prop name="layoutType">None</prop>
+ </properties>
+ <events>
+  <script name="ScopeLib" isEscaped="1"><![CDATA[dyn_string dpeNames( string dp ) // возвращает все конечные dpe(элементы) точки !! без имени точки !! работает для других систем // 
+{ 
+ dyn_string out; int len = strlen( dp );
+ while( true )
+ {
+    dp += &quot;.*&quot;;
+    dyn_string ss = dpNames( dp );
+    int n = dynlen(ss); if( n == 0 ) break;
+    for( int i =1; i &lt;= n; i++ )
+    { 
+      string dpe = ss[i]; if( strpos( dpe, &quot;.&quot; ) &lt; 0 ) continue;
+      if( dpElementType( dpe ) != DPEL_STRUCT ) dynAppend( out, substr( dpe, len ));
+    }
+ }  
+ return out;
+}
+
+void PARA( string dpe )
+{
+  if (!getUserPermission(4)) { ChildPanelOnCentralModal(&quot;vision/MessageWarning&quot;, getCatStr(&quot;para&quot;,&quot;warning&quot;), makeDynString(getCatStr(&quot;general&quot;,&quot;permission&quot;)) ); return; }
+
+  dyn_string params = dpExists(dpe) ? makeDynString(&quot;$OpenWithDp:&quot; + dpe) : makeDynString(); dyn_string ds;  dyn_float df;
+  ChildPanelOnCentralModalReturn(&quot;para&quot;, 
+                                 getCatStr( &quot;con&quot;, &quot;connTitle&quot; ), 
+                                 params, 
+                                 df, ds
+                                 );
+}
+]]></script>
+ </events>
+ <shapes>
+  <shape layerId="0" Name="COMBO_BOX5" shapeType="COMBO_BOX">
+   <properties>
+    <prop name="serialId">2</prop>
+    <prop name="Type"></prop>
+    <prop name="RefPoint">30 33</prop>
+    <prop name="Enable">True</prop>
+    <prop name="Visible">True</prop>
+    <prop name="ForeColor">_WindowText</prop>
+    <prop name="BackColor">_Window</prop>
+    <prop name="TabOrder">1</prop>
+    <prop name="ToolTipText">
+     <prop name="ru_RU.utf8"></prop>
+     <prop name="en_US.utf8"></prop>
+    </prop>
+    <prop name="BorderStyle">Normal</prop>
+    <prop name="snapMode">Point</prop>
+    <prop name="Font">
+     <prop name="ru_RU.utf8">Arial,-1,16,5,75,0,0,0,0,0</prop>
+     <prop name="en_US.utf8">Arial,-1,16,5,75,0,0,0,0,0</prop>
+    </prop>
+    <prop name="Location">30 30</prop>
+    <prop name="Size">211 25</prop>
+    <prop name="Listitems"/>
+    <prop name="Editable">True</prop>
+   </properties>
+   <events>
+    <script name="Initialize" isEscaped="1"><![CDATA[main()
+{
+  dyn_string n;
+  dyn_uint id;
+  getSystemNames(n,id);
+  COMBO_BOX5.items = n;
+}]]></script>
+   </events>
+  </shape>
+  <shape layerId="0" Name="SELECTION_LIST1" shapeType="SELECTION_LIST">
+   <properties>
+    <prop name="serialId">6</prop>
+    <prop name="Type"></prop>
+    <prop name="RefPoint">260 10.00000000000001</prop>
+    <prop name="Enable">True</prop>
+    <prop name="Visible">True</prop>
+    <prop name="ForeColor">_WindowText</prop>
+    <prop name="BackColor">_Window</prop>
+    <prop name="TabOrder">5</prop>
+    <prop name="ToolTipText">
+     <prop name="ru_RU.utf8"></prop>
+     <prop name="en_US.utf8"></prop>
+    </prop>
+    <prop name="BorderStyle">Normal</prop>
+    <prop name="snapMode">Point</prop>
+    <prop name="Font">
+     <prop name="ru_RU.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+     <prop name="en_US.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+    </prop>
+    <prop name="Location">260 10</prop>
+    <prop name="Size">441 181</prop>
+    <prop name="Listitems"/>
+    <prop name="SelectionMode">SingleSelection</prop>
+    <prop name="alternatingRowColors">False</prop>
+   </properties>
+   <events>
+    <script name="DoubleClicked" isEscaped="1"><![CDATA[main()
+{
+  string dpe = SELECTION_LIST1.selectedText;
+  PARA(dpe);
+}]]></script>
+   </events>
+  </shape>
+  <shape layerId="0" Name="TEXT_FIELD1" shapeType="TEXT_FIELD">
+   <properties>
+    <prop name="serialId">7</prop>
+    <prop name="Type"></prop>
+    <prop name="RefPoint">120 141</prop>
+    <prop name="Enable">True</prop>
+    <prop name="Visible">True</prop>
+    <prop name="ForeColor">_WindowText</prop>
+    <prop name="BackColor">_Window</prop>
+    <prop name="TabOrder">6</prop>
+    <prop name="ToolTipText">
+     <prop name="ru_RU.utf8"></prop>
+     <prop name="en_US.utf8"></prop>
+    </prop>
+    <prop name="BorderStyle">Normal</prop>
+    <prop name="snapMode">Point</prop>
+    <prop name="Font">
+     <prop name="ru_RU.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+     <prop name="en_US.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+    </prop>
+    <prop name="Location">120 137</prop>
+    <prop name="Size">121 20</prop>
+    <prop name="Editable">True</prop>
+    <prop name="TextFormat">[0s,,,ALIGNMENT_BEGINNING]</prop>
+   </properties>
+  </shape>
+  <shape layerId="0" Name="PUSH_BUTTON1" shapeType="PUSH_BUTTON">
+   <properties>
+    <prop name="serialId">8</prop>
+    <prop name="Type"></prop>
+    <prop name="RefPoint">120 173</prop>
+    <prop name="Enable">True</prop>
+    <prop name="Visible">True</prop>
+    <prop name="ForeColor">_ButtonText</prop>
+    <prop name="BackColor">_Button</prop>
+    <prop name="TabOrder">7</prop>
+    <prop name="ToolTipText">
+     <prop name="ru_RU.utf8"></prop>
+     <prop name="en_US.utf8"></prop>
+    </prop>
+    <prop name="BorderStyle">Normal</prop>
+    <prop name="snapMode">Point</prop>
+    <prop name="Font">
+     <prop name="ru_RU.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+     <prop name="en_US.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+    </prop>
+    <prop name="Location">120 168</prop>
+    <prop name="Size">121 23</prop>
+    <prop name="Text">
+     <prop name="ru_RU.utf8">Искать</prop>
+     <prop name="en_US.utf8">Искать</prop>
+    </prop>
+   </properties>
+   <events>
+    <script name="Clicked" isEscaped="1"><![CDATA[main()
+{
+  dyn_dyn_anytype tab;
+  SELECTION_LIST1.clearSelection();
+  int adressType;
+  
+  dyn_string logDyn;
+  string sys = COMBO_BOX5.selectedText;
+  string from = TEXT_FIELD2.text;
+  int findAdr = (int)TEXT_FIELD1.text;
+  if(strlen(sys) == 0){   
+    SELECTION_LIST1.items = &quot;Выберите имя системы&quot;;
+    return;
+  }
+  if(strlen(from) == 0){   
+    SELECTION_LIST1.items = &quot;Введите шаблон имени точки&quot;;
+    return;
+  }
+  if(findAdr == 0){   
+    SELECTION_LIST1.items = &quot;Введите адрес для поиска&quot;;
+    return;
+  }
+  dpQuery(&quot;SELECT '_distrib.._driver' FROM '*&quot; + from + &quot;*' REMOTE '&quot; + sys + &quot;' WHERE '_distrib.._type' &gt;0&quot;, tab);
+  dyn_string dpeName;
+  for(int i = 2; i &lt;= dynlen(tab); i++) {
+    dynAppend(dpeName,tab[i][1]);
+  }
+  // dpGet mass
+  DebugTN(  &quot;dpGet mass &quot; );
+  dyn_string ss;  for(int i = 1;i &lt;= dynlen(dpeName);i++) ss[i] = dpeName[i] + &quot;:_address.._type&quot;;
+  dyn_int type;  dpGet( ss, type );  
+  dyn_errClass e = getLastError();
+  if( dynlen( e ) ) 
+  {
+   for( int i = 1; i&lt;=dynlen(e); i++ ) 
+   { 
+     string dpe = getErrorDpName( e[i] );
+     int k = dynContains( ss, dpe );
+     DebugTN(  &quot; &gt;&quot;,  dpe, k );
+     if( k &gt; 1 ) dynRemove( ss, k );
+   }
+   dpGet( ss, type );  
+  }
+  
+  // DebugTN( &quot;dpGet mass &quot; , type );
+//  DebugTN(  &quot;dpGet mass END&quot;, dynlen( type )  );
+
+  dyn_string dpe_drv; dyn_string dpe_addr;   
+  for( int i = 1; i &lt;= dynlen(ss); i++ ) 
+  { 
+    if( type[i] &lt;= 0 ) continue;
+    string dpe = dpSubStr( ss[i], DPSUB_SYS_DP_EL );
+    dynAppend( dpe_drv,  dpe + &quot;:_address.._drv_ident&quot; );
+    dynAppend( dpe_addr, dpe + &quot;:_address.._reference&quot; );
+  }    
+ //  DebugTN(dpe_drv);
+  dyn_string drv;  dyn_string addr;  
+  dpGet( dpe_drv, drv );  dyn_errClass e = getLastError();
+  dpGet( dpe_addr, addr );  
+ // DebugTN(drv); //  DebugTN(addr);
+  int n = dynlen(dpe_addr);
+  for(int i = 1; i &lt;= n; i++)
+  {
+    string adrRef = addr[i]; string adrDrv = drv[i];
+    if( strpos(adrDrv, &quot;IEC&quot;) == -1 ) continue;
+    string dpeName = dpSubStr( dpe_addr[i], DPSUB_SYS_DP_EL );
+    dyn_string  middleData = strsplit(adrRef, &quot;.&quot;);
+    if(dynlen(middleData) &lt; 6){
+      DebugN(&quot;!! ADDRESS ERROR &quot;,dpeName, adrRef );
+     continue; 
+    }
+    int midAdr = ((int)middleData[4] * 65535) + ((int)middleData[5] * 256) + (int)middleData[6];
+    if(midAdr == findAdr) dynAppend(logDyn, dpeName);
+    PROGRESS_BAR1.value = i*100/n;    
+  }
+  SELECTION_LIST1.items = logDyn;
+  return; 
+  
+  /////
+  for(int i = 1;i &lt;= dynlen(dpeName);i++){
+    int adrType;
+    dpGet( dpeName[i] + &quot;:_address.._type&quot;, adrType );
+    if(adrType == 0) continue;
+    string adrRef, adrDrv;
+    dpGet(dpeName[i] + &quot;:_address.._reference&quot;, adrRef,
+          dpeName[i] + &quot;:_address.._drv_ident&quot;, adrDrv );
+    if(strpos(adrDrv, &quot;IEC&quot;) == -1) continue;
+    dyn_string middleData;
+    middleData = strsplit(adrRef, &quot;.&quot;);
+    double midAdr = ((double)middleData[4] * 65535) + ((int)middleData[5] * 256) + (int)middleData[6];
+    if(midAdr == findAdr) dynAppend(logDyn, dpeName[i]);
+    PROGRESS_BAR1.value = i*100/dynlen(dpeName);    
+  }
+
+  SELECTION_LIST1.items = logDyn;
+}
+
+]]></script>
+   </events>
+  </shape>
+  <shape layerId="0" Name="TEXT_FIELD2" shapeType="TEXT_FIELD">
+   <properties>
+    <prop name="serialId">9</prop>
+    <prop name="Type"></prop>
+    <prop name="RefPoint">30 100</prop>
+    <prop name="Enable">True</prop>
+    <prop name="Visible">True</prop>
+    <prop name="ForeColor">_WindowText</prop>
+    <prop name="BackColor">_Window</prop>
+    <prop name="TabOrder">8</prop>
+    <prop name="ToolTipText">
+     <prop name="ru_RU.utf8"></prop>
+     <prop name="en_US.utf8"></prop>
+    </prop>
+    <prop name="BorderStyle">Normal</prop>
+    <prop name="snapMode">Point</prop>
+    <prop name="Font">
+     <prop name="ru_RU.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+     <prop name="en_US.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+    </prop>
+    <prop name="Location">30 96</prop>
+    <prop name="Size">211 20</prop>
+    <prop name="Editable">True</prop>
+    <prop name="TextFormat">[0s,,,ALIGNMENT_BEGINNING]</prop>
+   </properties>
+  </shape>
+  <shape layerId="0" Name="PROGRESS_BAR1" shapeType="PROGRESS_BAR">
+   <properties>
+    <prop name="serialId">10</prop>
+    <prop name="Type"></prop>
+    <prop name="RefPoint">260 192</prop>
+    <prop name="Enable">True</prop>
+    <prop name="Visible">True</prop>
+    <prop name="ForeColor">_3DText</prop>
+    <prop name="BackColor">_3DFace</prop>
+    <prop name="TabOrder">9</prop>
+    <prop name="ToolTipText">
+     <prop name="ru_RU.utf8"></prop>
+     <prop name="en_US.utf8"></prop>
+    </prop>
+    <prop name="BorderStyle">Normal</prop>
+    <prop name="snapMode">Point</prop>
+    <prop name="Font">
+     <prop name="ru_RU.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+     <prop name="en_US.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+    </prop>
+    <prop name="Location">260 192</prop>
+    <prop name="Size">441 16</prop>
+   </properties>
+  </shape>
+  <shape layerId="0" Name="PRIMITIVE_TEXT1" shapeType="PRIMITIVE_TEXT">
+   <properties>
+    <prop name="serialId">11</prop>
+    <prop name="Type"></prop>
+    <prop name="RefPoint">79 10</prop>
+    <prop name="Enable">True</prop>
+    <prop name="Visible">True</prop>
+    <prop name="ForeColor">_WindowText</prop>
+    <prop name="BackColor">_Window</prop>
+    <prop name="TabOrder">10</prop>
+    <prop name="ToolTipText">
+     <prop name="ru_RU.utf8"></prop>
+     <prop name="en_US.utf8"></prop>
+    </prop>
+    <prop name="sizePolicy">
+     <sizePolicy vertical="Fixed" horizontal="Fixed"/>
+    </prop>
+    <prop name="snapMode">Point</prop>
+    <prop name="DashBackColor">_Transparent</prop>
+    <prop name="AntiAliased">False</prop>
+    <prop name="LineType">[solid,oneColor,JoinBevel,CapProjecting,1]</prop>
+    <prop name="BorderZoomable">False</prop>
+    <prop name="FillType">[outline]</prop>
+    <prop name="Location">79 10</prop>
+    <prop name="Font">
+     <prop name="ru_RU.utf8">MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0</prop>
+     <prop name="en_US.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+    </prop>
+    <prop name="Text">
+     <prop name="ru_RU.utf8">Имя системы</prop>
+     <prop name="en_US.utf8">Имя системы</prop>
+    </prop>
+    <prop name="Distance">2</prop>
+    <prop name="BorderOffset">2</prop>
+    <prop name="Bordered">False</prop>
+    <prop name="Fit">True</prop>
+    <prop name="TextFormat">[0s,,,ALIGNMENT_CENTER]</prop>
+   </properties>
+  </shape>
+  <shape layerId="0" Name="PRIMITIVE_TEXT2" shapeType="PRIMITIVE_TEXT">
+   <properties>
+    <prop name="serialId">12</prop>
+    <prop name="Type"></prop>
+    <prop name="RefPoint">102 76</prop>
+    <prop name="Enable">True</prop>
+    <prop name="Visible">True</prop>
+    <prop name="ForeColor">_WindowText</prop>
+    <prop name="BackColor">_Window</prop>
+    <prop name="TabOrder">11</prop>
+    <prop name="ToolTipText">
+     <prop name="ru_RU.utf8"></prop>
+     <prop name="en_US.utf8"></prop>
+    </prop>
+    <prop name="sizePolicy">
+     <sizePolicy vertical="Fixed" horizontal="Fixed"/>
+    </prop>
+    <prop name="snapMode">Point</prop>
+    <prop name="DashBackColor">_Transparent</prop>
+    <prop name="AntiAliased">False</prop>
+    <prop name="LineType">[solid,oneColor,JoinBevel,CapProjecting,1]</prop>
+    <prop name="BorderZoomable">False</prop>
+    <prop name="FillType">[outline]</prop>
+    <prop name="Location">102 76</prop>
+    <prop name="Font">
+     <prop name="ru_RU.utf8">MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0</prop>
+     <prop name="en_US.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+    </prop>
+    <prop name="Text">
+     <prop name="ru_RU.utf8">Часть имени точки</prop>
+     <prop name="en_US.utf8">Часть имени точки</prop>
+    </prop>
+    <prop name="Distance">2</prop>
+    <prop name="BorderOffset">2</prop>
+    <prop name="Bordered">False</prop>
+    <prop name="Fit">True</prop>
+    <prop name="TextFormat">[0s,,,ALIGNMENT_CENTER]</prop>
+   </properties>
+  </shape>
+  <shape layerId="0" Name="PRIMITIVE_TEXT3" shapeType="PRIMITIVE_TEXT">
+   <properties>
+    <prop name="serialId">13</prop>
+    <prop name="Type"></prop>
+    <prop name="RefPoint">75 137.5</prop>
+    <prop name="Enable">True</prop>
+    <prop name="Visible">True</prop>
+    <prop name="ForeColor">_WindowText</prop>
+    <prop name="BackColor">_Window</prop>
+    <prop name="TabOrder">12</prop>
+    <prop name="ToolTipText">
+     <prop name="ru_RU.utf8"></prop>
+     <prop name="en_US.utf8"></prop>
+    </prop>
+    <prop name="sizePolicy">
+     <sizePolicy vertical="Fixed" horizontal="Fixed"/>
+    </prop>
+    <prop name="snapMode">Point</prop>
+    <prop name="DashBackColor">_Transparent</prop>
+    <prop name="AntiAliased">False</prop>
+    <prop name="LineType">[solid,oneColor,JoinBevel,CapProjecting,1]</prop>
+    <prop name="BorderZoomable">False</prop>
+    <prop name="FillType">[outline]</prop>
+    <prop name="Location">75 137.5</prop>
+    <prop name="Font">
+     <prop name="ru_RU.utf8">MS Shell Dlg 2,-1,16,5,50,0,0,0,0,0</prop>
+     <prop name="en_US.utf8">MS Shell Dlg 2,-1,11,5,50,0,0,0,0,0</prop>
+    </prop>
+    <prop name="Text">
+     <prop name="ru_RU.utf8">Что ищем?</prop>
+     <prop name="en_US.utf8">Что ищем?</prop>
+    </prop>
+    <prop name="Distance">2</prop>
+    <prop name="BorderOffset">2</prop>
+    <prop name="Bordered">False</prop>
+    <prop name="Fit">True</prop>
+    <prop name="TextFormat">[0s,,,ALIGNMENT_CENTER]</prop>
+   </properties>
+  </shape>
+ </shapes>
+</panel>
